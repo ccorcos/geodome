@@ -83,10 +83,13 @@ function split(tri: Triangle): Array<Triangle> {
 	]
 }
 
-// console.log([A, I, J], split([A, I, J]))
-
-const geodome1 = _.flatten(icosahedron.map(split))
-const geodome2 = _.flatten(geodome1.map(split))
+function geoN(n: number): Triangle[] {
+	if (n === 0) {
+		return icosahedron
+	} else {
+		return _.flatten(geoN(n - 1).map(split))
+	}
+}
 
 function trianglesToPoly(triangles: Triangle[]) {
 	const points: Point[] = _.uniqWith(_.flatten(triangles), _.isEqual)
@@ -125,9 +128,7 @@ class Geodome extends React.Component {
 		renderer.domElement.style.width = `${width}px`
 		root.appendChild(renderer.domElement)
 
-		// const geometry = trianglesToPoly(icosahedron)
-		const geometry = trianglesToPoly(geodome1)
-		// const geometry = trianglesToPoly(geodome2)
+		const geometry = trianglesToPoly(geoN(3))
 
 		var material = new THREE.MeshPhongMaterial({
 			color: 0x000000,
