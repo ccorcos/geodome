@@ -47,6 +47,47 @@ const icosahedron: Triangle[] = [
 	[F, G, K],
 ]
 
+const edge = 2
+const radius = Math.sqrt(1 + g * g)
+
+function sub(p1: Point, p2: Point): Point {
+	return [p1[0] - p2[0], p1[1] - p2[1], p1[2] - p2[2]]
+}
+
+function mult(n: number, p1: Point): Point {
+	return [p1[0] * n, p1[1] * n, p1[2] * n]
+}
+
+function add(p1: Point, p2: Point): Point {
+	return [p1[0] + p2[0], p1[1] + p2[1], p1[2] + p2[2]]
+}
+
+function distance(p1: Point, p2: Point): number {
+	const x = sub(p1, p2)
+	return Math.sqrt(x[0] * x[0] + x[1] * x[1] + x[2] * x[2])
+}
+
+function split(tri: Triangle): Array<Triangle> {
+	const midpoint01 = add(mult(0.5, tri[0]), mult(0.5, tri[1]))
+	const midpoint02 = add(mult(0.5, tri[0]), mult(0.5, tri[2]))
+	const midpoint12 = add(mult(0.5, tri[1]), mult(0.5, tri[2]))
+	const scale = radius / distance(midpoint01, [0, 0, 0])
+	const m01 = mult(scale, midpoint01)
+	const m02 = mult(scale, midpoint02)
+	const m12 = mult(scale, midpoint12)
+	return [
+		[m01, m02, m12],
+		[tri[0], m01, m02],
+		[tri[1], m01, m12],
+		[tri[2], m02, m12],
+	]
+}
+
+// console.log([A, I, J], split([A, I, J]))
+
+const geodome1 = _.flatten(icosahedron.map(split))
+const geodome2 = _.flatten(geodome1.map(split))
+
 function trianglesToPoly(triangles: Triangle[]) {
 	const points: Point[] = _.uniqWith(_.flatten(triangles), _.isEqual)
 	const vertices = _.flatten(points)
@@ -59,8 +100,6 @@ function trianglesToPoly(triangles: Triangle[]) {
 			})
 		)
 	)
-
-	console.log(vertices, faces)
 	const geometry = new THREE.PolyhedronGeometry(vertices, faces, 10, 0)
 	return geometry
 }
@@ -74,19 +113,24 @@ class Geodome extends React.Component {
 
 	public componentDidMount() {
 		const scene = new THREE.Scene()
-		const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+		const width = window.innerWidth * 0.8
+		const height = window.innerHeight * 0.8
+
+		const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
 
 		const renderer = new THREE.WebGLRenderer()
-		renderer.setSize(window.innerWidth, window.innerHeight)
+		renderer.setSize(width, height)
 		const root = this.div.current as HTMLElement
-		renderer.domElement.style.height = "500px"
-		renderer.domElement.style.width = "500px"
+		renderer.domElement.style.height = `${height}px`
+		renderer.domElement.style.width = `${width}px`
 		root.appendChild(renderer.domElement)
 
-		const geometry = trianglesToPoly(icosahedron)
+		// const geometry = trianglesToPoly(icosahedron)
+		const geometry = trianglesToPoly(geodome1)
+		// const geometry = trianglesToPoly(geodome2)
 
 		var material = new THREE.MeshPhongMaterial({
-			color: 0xff0000,
+			color: 0x000000,
 			polygonOffset: true,
 			polygonOffsetFactor: 1, // positive value pushes polygon further away
 			polygonOffsetUnits: 1,
@@ -103,7 +147,7 @@ class Geodome extends React.Component {
 
 		// https://stackoverflow.com/questions/31539130/display-wireframe-and-solid-color
 		var geo = new THREE.EdgesGeometry(mesh.geometry) // or WireframeGeometry
-		var mat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 })
+		var mat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 4 })
 		var wireframe = new THREE.LineSegments(geo, mat)
 		mesh.add(wireframe)
 
