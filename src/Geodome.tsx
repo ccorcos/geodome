@@ -84,21 +84,36 @@ class Geodome extends React.Component {
 		root.appendChild(renderer.domElement)
 
 		const geometry = trianglesToPoly(icosahedron)
-		const material = new THREE.MeshBasicMaterial({
-			color: 0x00ff00,
-			opacity: 0.6,
-			reflectivity: 0.1,
+
+		var material = new THREE.MeshPhongMaterial({
+			color: 0xff0000,
+			polygonOffset: true,
+			polygonOffsetFactor: 1, // positive value pushes polygon further away
+			polygonOffsetUnits: 1,
 		})
-		const polyhedron = new THREE.Mesh(geometry, material)
-		scene.add(polyhedron)
+
+		// const material = new THREE.MeshBasicMaterial({
+		// 	color: 0x00ff00,
+		// 	opacity: 0.6,
+		// 	reflectivity: 0.1,
+		// })
+
+		const mesh = new THREE.Mesh(geometry, material)
+		scene.add(mesh)
+
+		// https://stackoverflow.com/questions/31539130/display-wireframe-and-solid-color
+		var geo = new THREE.EdgesGeometry(mesh.geometry) // or WireframeGeometry
+		var mat = new THREE.LineBasicMaterial({ color: 0xffffff, linewidth: 2 })
+		var wireframe = new THREE.LineSegments(geo, mat)
+		mesh.add(wireframe)
 
 		camera.position.z = 50
 
 		const animate = () => {
 			requestAnimationFrame(animate)
 
-			polyhedron.rotation.x += 0.01
-			polyhedron.rotation.y += 0.01
+			mesh.rotation.x += 0.01
+			mesh.rotation.y += 0.01
 
 			renderer.render(scene, camera)
 		}
