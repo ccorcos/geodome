@@ -1,0 +1,302 @@
+scale = 10;
+thickness = 1;
+
+x0 = -1;
+y0 = -0.6180339887498949;
+z0 = 1.618033988749895;
+length0 = norm([x0,y0,z0]);
+b0 = acos(z0/length0);
+c0 = atan2(y0,x0);
+
+rotate([0, 0.6283185307179586*scale, -2.588018294692748*scale])
+cylinder(h = length0*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x1 = -2;
+y1 = 0;
+z1 = 0;
+length1 = norm([x1,y1,z1]);
+b1 = acos(z1/length1);
+c1 = atan2(y1,x1);
+
+rotate([0, 1.5707963267948966*scale, 3.141592653589793*scale])
+cylinder(h = length1*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x2 = -1;
+y2 = 0.6180339887498949;
+z2 = -1.618033988749895;
+length2 = norm([x2,y2,z2]);
+b2 = acos(z2/length2);
+c2 = atan2(y2,x2);
+
+rotate([0, 2.5132741228718345*scale, 2.588018294692748*scale])
+cylinder(h = length2*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x3 = 0.6180339887498949;
+y3 = 1.618033988749895;
+z3 = -1;
+length3 = norm([x3,y3,z3]);
+b3 = acos(z3/length3);
+c3 = atan2(y3,x3);
+
+rotate([0, 2.0943951023931957*scale, 1.2059324986814135*scale])
+cylinder(h = length3*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x4 = -1.618033988749895;
+y4 = -1;
+z4 = -0.6180339887498949;
+length4 = norm([x4,y4,z4]);
+b4 = acos(z4/length4);
+c4 = atan2(y4,x4);
+
+rotate([0, 1.8849555921538759*scale, -2.588018294692748*scale])
+cylinder(h = length4*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x5 = -1.618033988749895;
+y5 = 1;
+z5 = -0.6180339887498949;
+length5 = norm([x5,y5,z5]);
+b5 = acos(z5/length5);
+c5 = atan2(y5,x5);
+
+rotate([0, 1.8849555921538759*scale, 2.588018294692748*scale])
+cylinder(h = length5*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x6 = 0;
+y6 = -2;
+z6 = 0;
+length6 = norm([x6,y6,z6]);
+b6 = acos(z6/length6);
+c6 = atan2(y6,x6);
+
+rotate([0, 1.5707963267948966*scale, -1.5707963267948966*scale])
+cylinder(h = length6*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x7 = -1.618033988749895;
+y7 = -1;
+z7 = 0.6180339887498949;
+length7 = norm([x7,y7,z7]);
+b7 = acos(z7/length7);
+c7 = atan2(y7,x7);
+
+rotate([0, 1.2566370614359172*scale, -2.588018294692748*scale])
+cylinder(h = length7*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x8 = -1.618033988749895;
+y8 = 1;
+z8 = 0.6180339887498949;
+length8 = norm([x8,y8,z8]);
+b8 = acos(z8/length8);
+c8 = atan2(y8,x8);
+
+rotate([0, 1.2566370614359172*scale, 2.588018294692748*scale])
+cylinder(h = length8*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x9 = -0.6180339887498949;
+y9 = 1.618033988749895;
+z9 = -1;
+length9 = norm([x9,y9,z9]);
+b9 = acos(z9/length9);
+c9 = atan2(y9,x9);
+
+rotate([0, 2.0943951023931957*scale, 1.9356601549083798*scale])
+cylinder(h = length9*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x10 = 0.6180339887498949;
+y10 = -1.618033988749895;
+z10 = -1;
+length10 = norm([x10,y10,z10]);
+b10 = acos(z10/length10);
+c10 = atan2(y10,x10);
+
+rotate([0, 2.0943951023931957*scale, -1.2059324986814135*scale])
+cylinder(h = length10*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x11 = -1;
+y11 = -0.6180339887498949;
+z11 = -1.618033988749895;
+length11 = norm([x11,y11,z11]);
+b11 = acos(z11/length11);
+c11 = atan2(y11,x11);
+
+rotate([0, 2.5132741228718345*scale, -2.588018294692748*scale])
+cylinder(h = length11*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x12 = -2;
+y12 = 0;
+z12 = 0;
+length12 = norm([x12,y12,z12]);
+b12 = acos(z12/length12);
+c12 = atan2(y12,x12);
+
+rotate([0, 1.5707963267948966*scale, 3.141592653589793*scale])
+cylinder(h = length12*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x13 = -1;
+y13 = 0.6180339887498949;
+z13 = 1.618033988749895;
+length13 = norm([x13,y13,z13]);
+b13 = acos(z13/length13);
+c13 = atan2(y13,x13);
+
+rotate([0, 0.6283185307179586*scale, 2.588018294692748*scale])
+cylinder(h = length13*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x14 = -0.6180339887498949;
+y14 = -1.618033988749895;
+z14 = -1;
+length14 = norm([x14,y14,z14]);
+b14 = acos(z14/length14);
+c14 = atan2(y14,x14);
+
+rotate([0, 2.0943951023931957*scale, -1.9356601549083798*scale])
+cylinder(h = length14*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x15 = 0;
+y15 = -2;
+z15 = 0;
+length15 = norm([x15,y15,z15]);
+b15 = acos(z15/length15);
+c15 = atan2(y15,x15);
+
+rotate([0, 1.5707963267948966*scale, -1.5707963267948966*scale])
+cylinder(h = length15*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x16 = -1.618033988749895;
+y16 = 1;
+z16 = -0.6180339887498949;
+length16 = norm([x16,y16,z16]);
+b16 = acos(z16/length16);
+c16 = atan2(y16,x16);
+
+rotate([0, 1.8849555921538759*scale, 2.588018294692748*scale])
+cylinder(h = length16*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x17 = -1.618033988749895;
+y17 = -1;
+z17 = -0.6180339887498949;
+length17 = norm([x17,y17,z17]);
+b17 = acos(z17/length17);
+c17 = atan2(y17,x17);
+
+rotate([0, 1.8849555921538759*scale, -2.588018294692748*scale])
+cylinder(h = length17*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x18 = -0.6180339887498949;
+y18 = -1.618033988749895;
+z18 = 1;
+length18 = norm([x18,y18,z18]);
+b18 = acos(z18/length18);
+c18 = atan2(y18,x18);
+
+rotate([0, 1.0471975511965979*scale, -1.9356601549083798*scale])
+cylinder(h = length18*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x19 = -1;
+y19 = 0.6180339887498949;
+z19 = -1.618033988749895;
+length19 = norm([x19,y19,z19]);
+b19 = acos(z19/length19);
+c19 = atan2(y19,x19);
+
+rotate([0, 2.5132741228718345*scale, 2.588018294692748*scale])
+cylinder(h = length19*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x20 = -1;
+y20 = -0.6180339887498949;
+z20 = 1.618033988749895;
+length20 = norm([x20,y20,z20]);
+b20 = acos(z20/length20);
+c20 = atan2(y20,x20);
+
+rotate([0, 0.6283185307179586*scale, -2.588018294692748*scale])
+cylinder(h = length20*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x21 = 0.6180339887498949;
+y21 = -1.618033988749895;
+z21 = 1;
+length21 = norm([x21,y21,z21]);
+b21 = acos(z21/length21);
+c21 = atan2(y21,x21);
+
+rotate([0, 1.0471975511965979*scale, -1.2059324986814135*scale])
+cylinder(h = length21*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x22 = -1.618033988749895;
+y22 = 1;
+z22 = 0.6180339887498949;
+length22 = norm([x22,y22,z22]);
+b22 = acos(z22/length22);
+c22 = atan2(y22,x22);
+
+rotate([0, 1.2566370614359172*scale, 2.588018294692748*scale])
+cylinder(h = length22*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x23 = -1.618033988749895;
+y23 = -1;
+z23 = 0.6180339887498949;
+length23 = norm([x23,y23,z23]);
+b23 = acos(z23/length23);
+c23 = atan2(y23,x23);
+
+rotate([0, 1.2566370614359172*scale, -2.588018294692748*scale])
+cylinder(h = length23*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x24 = 0.6180339887498949;
+y24 = 1.618033988749895;
+z24 = 1;
+length24 = norm([x24,y24,z24]);
+b24 = acos(z24/length24);
+c24 = atan2(y24,x24);
+
+rotate([0, 1.0471975511965979*scale, 1.2059324986814135*scale])
+cylinder(h = length24*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x25 = -1;
+y25 = 0.6180339887498949;
+z25 = 1.618033988749895;
+length25 = norm([x25,y25,z25]);
+b25 = acos(z25/length25);
+c25 = atan2(y25,x25);
+
+rotate([0, 0.6283185307179586*scale, 2.588018294692748*scale])
+cylinder(h = length25*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x26 = -1;
+y26 = -0.6180339887498949;
+z26 = -1.618033988749895;
+length26 = norm([x26,y26,z26]);
+b26 = acos(z26/length26);
+c26 = atan2(y26,x26);
+
+rotate([0, 2.5132741228718345*scale, -2.588018294692748*scale])
+cylinder(h = length26*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x27 = -0.6180339887498949;
+y27 = 1.618033988749895;
+z27 = 1;
+length27 = norm([x27,y27,z27]);
+b27 = acos(z27/length27);
+c27 = atan2(y27,x27);
+
+rotate([0, 1.0471975511965979*scale, 1.9356601549083798*scale])
+cylinder(h = length27*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x28 = 0;
+y28 = 0;
+z28 = -2;
+length28 = norm([x28,y28,z28]);
+b28 = acos(z28/length28);
+c28 = atan2(y28,x28);
+
+rotate([0, 3.141592653589793*scale, 0*scale])
+cylinder(h = length28*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);
+
+x29 = 0;
+y29 = 0;
+z29 = -2;
+length29 = norm([x29,y29,z29]);
+b29 = acos(z29/length29);
+c29 = atan2(y29,x29);
+
+rotate([0, 3.141592653589793*scale, 0*scale])
+cylinder(h = length29*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);

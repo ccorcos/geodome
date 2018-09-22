@@ -47,7 +47,7 @@ const icosahedron: Triangle[] = [
 	[F, G, K],
 ]
 
-const edge = 2
+const edge = 2 // of the icosahedron
 const radius = Math.sqrt(1 + g * g)
 
 function sub(p1: Point, p2: Point): Point {
