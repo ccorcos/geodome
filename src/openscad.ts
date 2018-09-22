@@ -1,7 +1,7 @@
 import * as _ from "lodash"
 
 const diameter = 200
-const geoV = 3
+const geoV = 2
 
 // http://www.geometer.org/mathcircles/geodesic.pdf
 // Golden Ratio
@@ -139,8 +139,8 @@ function hslToRgb(h: number, s: number, l: number) {
 const scale = 200 / radius
 
 function segLength(seg: [Point, Point]) {
-	const len = distance(seg[0], seg[1])
-	return Math.round(len * scale * 100) / 100
+	const length = distance(seg[0], seg[1]) * scale
+	return Math.round(length * 100) / 100
 }
 
 const shape = geoN(1)
