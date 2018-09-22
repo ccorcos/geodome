@@ -1,5 +1,8 @@
 import * as _ from "lodash"
 
+const diameter = 200
+const geoV = 3
+
 // http://www.geometer.org/mathcircles/geodesic.pdf
 // Golden Ratio
 const g = (1 + Math.sqrt(5)) / 2
@@ -179,6 +182,8 @@ function cylinder(line: [Point, Point], i: number) {
 console.log(
 	[
 		"/*",
+		`V${geoV} Geodesic Sphere`,
+		`${diameter} ft diameter\n`,
 		Object.keys(sizeKeys)
 			.map(size => {
 				return `${sizeKeys[size]} segments at ${parseFloat(size)} ft`
