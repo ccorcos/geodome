@@ -213,6 +213,8 @@ console.log(
 	].join("\n") + "\n"
 )
 
+console.log(segments.map(cylinder).join("\n\n"))
+
 // console.log(
 // 	points
 // 		.map(point => {
@@ -224,5 +226,3 @@ console.log(
 // 		})
 // 		.join("\n")
 // )
-
-console.log(segments.map(cylinder).join("\n\n"))
