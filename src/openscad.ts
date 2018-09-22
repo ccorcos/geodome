@@ -102,43 +102,27 @@ function trianglesToSegments(triangles: Triangle[]) {
 	return uniqLines
 }
 
-// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/The_OpenSCAD_Language#cylinder
-function cylinder(line: [Point, Point], i: number) {
-	const point = sub(line[1], line[0])
-	return [
-		`x${i} = ${point[0]};`,
-		`y${i} = ${point[1]};`,
-		`z${i} = ${point[2]};`,
-		`length${i} = norm([x${i},y${i},z${i}]);`,
-		`b${i} = acos(z${i}/length${i});`,
-		`c${i} = atan2(y${i},x${i});\n`,
-		`color("blue")`,
-		`translate([${line[0][0]}*scale,${line[0][1]}*scale, ${line[0][2]}*scale])`,
-		`rotate([0, b${i}, c${i}])`,
-		`cylinder(h = length${i}*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);`,
-	].join("\n")
-}
-
 function segmenentsToPoint(segments: [Point, Point][]) {
 	const points = _.uniqWith(_.flatten(segments), _.isEqual)
 	return points as Array<Point>
 }
 
 // https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion
+function hue2rgb(p: number, q: number, t: number) {
+	if (t < 0) t += 1
+	if (t > 1) t -= 1
+	if (t < 1 / 6) return p + (q - p) * 6 * t
+	if (t < 1 / 2) return q
+	if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+	return p
+}
+
+// each number is 0-1
 function hslToRgb(h: number, s: number, l: number) {
 	var r, g, b
 	if (s == 0) {
 		r = g = b = l // achromatic
 	} else {
-		var hue2rgb = function hue2rgb(p, q, t) {
-			if (t < 0) t += 1
-			if (t > 1) t -= 1
-			if (t < 1 / 6) return p + (q - p) * 6 * t
-			if (t < 1 / 2) return q
-			if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
-			return p
-		}
-
 		var q = l < 0.5 ? l * (1 + s) : l + s - l * s
 		var p = 2 * l - q
 		r = hue2rgb(p, q, h + 1 / 3)
@@ -156,50 +140,74 @@ function segLength(seg: [Point, Point]) {
 	return Math.round(len * scale * 100) / 100
 }
 
-function main() {
-	const shape = geoN(1)
-	const segments = trianglesToSegments(shape)
-	const points = segmenentsToPoint(segments)
+const shape = geoN(1)
+const segments = trianglesToSegments(shape)
+const points = segmenentsToPoint(segments)
 
-	const groups = _.groupBy(segments.map(segLength), x => x)
-	const sizes = _.mapValues(groups, group => group.length)
-	console.log(
-		[
-			"/*",
-			Object.keys(sizes)
-				.map(size => {
-					return `${sizes[size]} segments at ${parseFloat(size)} ft`
-				})
-				.join("\n"),
-			"*/",
-		].join("\n") + "\n"
-	)
+const groups = _.groupBy(segments.map(segLength), x => x)
+const sizeKeys = _.mapValues(groups, group => group.length)
 
-	console.log(
-		[
-			`scale = ${scale};`,
-			"thickness = 2;",
-			`pi = ${Math.PI};`,
-			"rad2deg = 180 / pi;",
-			"circleSize = scale / 100;",
-		].join("\n") + "\n"
-	)
-
-	// console.log(
-	// 	points
-	// 		.map(point => {
-	// 			return [
-	// 				`color("red")`,
-	// 				`translate([${point[0]}*scale,${point[1]}*scale, ${point[2]}*scale])`,
-	// 				`sphere(circleSize);`,
-	// 			].join("\n")
-	// 		})
-	// 		.join("\n")
-	// )
-
-	console.log(segments.map(cylinder).join("\n\n"))
+const sizes = Object.keys(sizeKeys).map(str => parseFloat(str))
+const minSize = Math.min(...sizes)
+const maxSize = Math.max(...sizes)
+const start = 0
+const sweep = 240
+function getColor(size: number) {
+	const ratio = (size - minSize) / (maxSize - minSize)
+	const hue = ((start + ratio * sweep) / 360) % 1
+	const [r, g, b] = hslToRgb(hue, 1, 0.5)
+	return `color( c = [${r / 255}, ${g / 255}, ${b / 255}, 1] )`
 }
 
-export default main
+// https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/The_OpenSCAD_Language#cylinder
+function cylinder(line: [Point, Point], i: number) {
+	const point = sub(line[1], line[0])
+	return [
+		`x${i} = ${point[0]};`,
+		`y${i} = ${point[1]};`,
+		`z${i} = ${point[2]};`,
+		`length${i} = norm([x${i},y${i},z${i}]);`,
+		`b${i} = acos(z${i}/length${i});`,
+		`c${i} = atan2(y${i},x${i});\n`,
+		getColor(segLength(line)),
+		`translate([${line[0][0]}*scale,${line[0][1]}*scale, ${line[0][2]}*scale])`,
+		`rotate([0, b${i}, c${i}])`,
+		`cylinder(h = length${i}*scale, r1 = 1*thickness, r2 = 1*thickness, center = false);`,
+	].join("\n")
+}
 
-main()
+console.log(
+	[
+		"/*",
+		Object.keys(sizeKeys)
+			.map(size => {
+				return `${sizeKeys[size]} segments at ${parseFloat(size)} ft`
+			})
+			.join("\n"),
+		"*/",
+	].join("\n") + "\n"
+)
+
+console.log(
+	[
+		`scale = ${scale};`,
+		"thickness = 2;",
+		`pi = ${Math.PI};`,
+		"rad2deg = 180 / pi;",
+		"circleSize = scale / 100;",
+	].join("\n") + "\n"
+)
+
+// console.log(
+// 	points
+// 		.map(point => {
+// 			return [
+// 				`color("red")`,
+// 				`translate([${point[0]}*scale,${point[1]}*scale, ${point[2]}*scale])`,
+// 				`sphere(circleSize);`,
+// 			].join("\n")
+// 		})
+// 		.join("\n")
+// )
+
+console.log(segments.map(cylinder).join("\n\n"))
