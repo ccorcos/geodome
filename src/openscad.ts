@@ -1,7 +1,7 @@
 import * as _ from "lodash"
 
 const diameter = 200
-const geoV = 2
+const geoV = 3
 
 // http://www.geometer.org/mathcircles/geodesic.pdf
 // Golden Ratio
@@ -136,21 +136,22 @@ function hslToRgb(h: number, s: number, l: number) {
 	return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)]
 }
 
-const scale = 200 / radius
+const scale = diameter / radius
 
 function segLength(seg: [Point, Point]) {
 	const length = distance(seg[0], seg[1]) * scale
 	return Math.round(length * 100) / 100
 }
 
-const shape = geoN(1)
+const shape = geoN(geoV)
 const segments = trianglesToSegments(shape)
 const points = segmenentsToPoint(segments)
 
 const groups = _.groupBy(segments.map(segLength), x => x)
-const sizeKeys = _.mapValues(groups, group => group.length)
+const sizesObj = _.mapValues(groups, group => group.length)
+const orderedSizeKeys = _.sortBy(Object.keys(sizesObj), str => -parseFloat(str))
 
-const sizes = Object.keys(sizeKeys).map(str => parseFloat(str))
+const sizes = Object.keys(sizesObj).map(str => parseFloat(str))
 const minSize = Math.min(...sizes)
 const maxSize = Math.max(...sizes)
 const start = 0
@@ -179,16 +180,25 @@ function cylinder(line: [Point, Point], i: number) {
 	].join("\n")
 }
 
+function displayFt(n: number) {
+	const ft = Math.floor(n)
+	const fraction = n % 1
+	const inches = Math.round(fraction * 12 * 2) / 2
+	return `${ft} ft ${inches} inches`
+}
+
 console.log(
 	[
 		"/*",
 		`V${geoV} Geodesic Sphere`,
 		`${diameter} ft diameter\n`,
-		Object.keys(sizeKeys)
+		"longest are red",
+		orderedSizeKeys
 			.map(size => {
-				return `${sizeKeys[size]} segments at ${parseFloat(size)} ft`
+				return `${sizesObj[size]} segments at ${displayFt(parseFloat(size))} ft`
 			})
 			.join("\n"),
+		"shortest blue",
 		"*/",
 	].join("\n") + "\n"
 )
@@ -196,7 +206,7 @@ console.log(
 console.log(
 	[
 		`scale = ${scale};`,
-		"thickness = 2;",
+		"thickness = 1;",
 		`pi = ${Math.PI};`,
 		"rad2deg = 180 / pi;",
 		"circleSize = scale / 100;",
